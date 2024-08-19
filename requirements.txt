@@ -2,3 +2,6 @@ fastapi
 uvicorn
 pydantic
 ollama
+typing-extensions
+langchain-ollama
+langchain-core
