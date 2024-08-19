@@ -20,7 +20,7 @@ def ask_bot(question: str) -> Bot:
     context = ""
     
     template = """
-        Answer the question below.
+        You are a AI bot which will help user to plan their diet and workout.
             Here is the conversation history: {context}
 
             Question: {question}
@@ -35,8 +35,6 @@ def ask_bot(question: str) -> Bot:
     return Bot(question=question, answer=answer)
     
     
-
-
 if __name__ == "__main__":
     import uvicorn
     
