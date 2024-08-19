@@ -16,23 +16,23 @@ class Bot(BaseModel):
 
 @app.post("/ask-question/{question}", response_model=Bot)
 def ask_bot(question: str) -> Bot:
-    model = OllamaLLM(model="llama3")
-    context = ""
-    
-    template = """
+    try:
+        template = """
         You are a AI bot which will help user to plan their diet and workout.
             Here is the conversation history: {context}
 
             Question: {question}
 
             Answer: 
-    """
-    prompt = ChatPromptTemplate.from_template(template)
-    
-    chain = prompt | model
-    answer = chain.invoke({"context": context, "question": question})
-    responses.append(answer)
-    return Bot(question=question, answer=answer)
+        """
+        model = OllamaLLM(model="llama3")
+        context = ""
+        prompt = ChatPromptTemplate.from_template(template)
+        chain = prompt | model
+        answer = chain.invoke({"context": context, "question": question})
+        return Bot(question=question, answer=answer)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Internal Server Error")
     
     
 if __name__ == "__main__":
