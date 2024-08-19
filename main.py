@@ -14,6 +14,15 @@ class Bot(BaseModel):
     question: str
     answer: str
 
+class Add(BaseModel):
+    number: int
+    answer: int
+    
+@app.post("/get/{number}")
+def add(number: int)-> Add:
+    result = number * number
+    return Add(number=number, answer=result)
+
 @app.post("/ask-question/{question}", response_model=Bot)
 def ask_bot(question: str) -> Bot:
     try:
