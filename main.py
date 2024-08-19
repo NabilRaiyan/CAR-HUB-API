@@ -51,13 +51,7 @@ def delete_task(task_id):
             return task.pop(idx)
     raise HTTPException(status_code=404, detail="Task not found")
 
-    
-    
-    
-    
-    
-    
-    
+
 if __name__ == "__main__":
     import uvicorn
     
