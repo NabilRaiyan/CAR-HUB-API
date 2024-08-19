@@ -2,28 +2,39 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 from uuid import UUID, uuid4
-
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import ChatPromptTemplate
 
 app = FastAPI()
-
-class Bot(BaseModel):
-    id: Optional[UUID] = None
-    question: str
-    answer: str
 
 
 responses = []
 
+class Bot(BaseModel):
+    question: str
+    answer: str
 
-@app.post("/ask-question/", response_model = Bot)
-def create_bot(bot: Bot):
-    bot.id = uuid4()
-    responses.append(bot)
-    return bot
+@app.post("/ask-question/{question}", response_model=Bot)
+def ask_bot(question: str) -> Bot:
+    model = OllamaLLM(model="llama3")
+    context = ""
+    
+    template = """
+        Answer the question below.
+            Here is the conversation history: {context}
 
-@app.get("/get-responses/", response_model = List[Bot])
-def read_bot():
-    return responses
+            Question: {question}
+
+            Answer: 
+    """
+    prompt = ChatPromptTemplate.from_template(template)
+    
+    chain = prompt | model
+    answer = chain.invoke({"context": context, "question": question})
+    responses.append(answer)
+    return Bot(question=question, answer=answer)
+    
+    
 
 
 if __name__ == "__main__":
