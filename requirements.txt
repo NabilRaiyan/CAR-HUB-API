@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-pydantic
-ollama
-typing-extensions
-langchain_ollama
-langchain_core
-langchain
