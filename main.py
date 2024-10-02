@@ -1,8 +1,8 @@
+import string
 from fastapi import FastAPI, HTTPException, status, Depends
 from pydantic import BaseModel
 from typing import Annotated
 
-from sqlalchemy import String
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
@@ -34,7 +34,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 @app.get("/posts/{title}", status_code=status.HTTP_200_OK)
-async def get_post(post_title: String, db:db_dependency):
+async def get_post(post_title: str, db:db_dependency):
     post = db.query(models.Post).filter(models.Post.title == post_title).first()
     if post is None:
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post is not found in the database")
