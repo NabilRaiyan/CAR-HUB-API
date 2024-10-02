@@ -4,6 +4,8 @@ from typing import Annotated
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
+import pyshorteners
+
 
 
 app = FastAPI()
@@ -12,6 +14,7 @@ models.Base.metadata.create_all(bind=engine)
 class PostBase(BaseModel):
     title: str
     content: str
+    image_url: str
     user_id: int
 
 
@@ -33,4 +36,18 @@ async def create_user(user: UserBase, db: db_dependency):
     db_user = models.User(**user.dict())
     db.add(db_user)
     db.commit()
+
+@app.post("/posts", status_code=status.HTTP_201_CREATED)
+async def create_post(post: PostBase, db: db_dependency):
+    url_shortener = pyshorteners.Shortener()
+    short_url = url_shortener.tinyurl.short(post.image_url)
+    
+    post_data = post.dict()
+    post_data['image_url'] = short_url
+    
+    print("The Shortened URL is: " + short_url)
+    db_post = models.Post(**post_data)
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
         
