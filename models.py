@@ -15,7 +15,9 @@ class Post(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(50))
     content = Column(String(50))
+    image_url = Column(String(150))
     user_id = Column(Integer)
+    
     
 
 
