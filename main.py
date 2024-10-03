@@ -43,7 +43,7 @@ async def get_post(post_title: str, db:db_dependency):
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post is not found in the database")
     return post
     
-
+# creating user  
 @app.post("/users", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserBase, db: db_dependency):
     db_user = models.User(**user.dict())
