@@ -35,6 +35,7 @@ def get_db():
         
 db_dependency = Annotated[Session, Depends(get_db)]
 
+# get post by title route
 @app.get("/posts/{title}", status_code=status.HTTP_200_OK)
 async def get_post(post_title: str, db:db_dependency):
     post = db.query(models.Post).filter(models.Post.title == post_title).first()
