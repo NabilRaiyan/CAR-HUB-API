@@ -57,6 +57,7 @@ async def create_post(post: PostBase, db: db_dependency):
     url_shortener = pyshorteners.Shortener()
     short_url = url_shortener.tinyurl.short(post.image_url)
     
+    # initializing new short image url to our post object
     post_data = post.dict()
     post_data['image_url'] = short_url
     
