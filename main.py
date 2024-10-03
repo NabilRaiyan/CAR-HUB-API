@@ -13,6 +13,7 @@ import pyshorteners
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
+# Post Base interface
 class PostBase(BaseModel):
     title: str
     content: str
