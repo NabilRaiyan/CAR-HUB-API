@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 import pyshorteners
 
 
-
+# initiating FastAPI
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
