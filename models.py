@@ -9,6 +9,7 @@ class User(Base):
     username = Column(String(50), unique=True)
 
 
+# Post schema
 class Post(Base):
     __tablename__ = 'posts'
     
