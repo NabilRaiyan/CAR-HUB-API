@@ -21,6 +21,7 @@ class PostBase(BaseModel):
     user_id: int
 
 
+# User Base interface
 class UserBase(BaseModel):
     username: str
     
