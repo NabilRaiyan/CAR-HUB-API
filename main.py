@@ -62,7 +62,7 @@ async def create_post(post: PostBase, db: db_dependency):
     post_data = post.dict()
     post_data['image_url'] = short_url
     
-    print("The Shortened URL is: " + short_url)
+    # print("The Shortened URL is: " + short_url)
     
     # saving data to the db
     db_post = models.Post(**post_data)
