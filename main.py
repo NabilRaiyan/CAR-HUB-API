@@ -50,6 +50,7 @@ async def create_user(user: UserBase, db: db_dependency):
     db.add(db_user)
     db.commit()
 
+
 # creating post 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 async def create_post(post: PostBase, db: db_dependency):
