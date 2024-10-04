@@ -25,7 +25,7 @@ class PostBase(BaseModel):
 class UserBase(BaseModel):
     username: str
     
-
+# get db function
 def get_db():
     db = SessionLocal()
     try:
